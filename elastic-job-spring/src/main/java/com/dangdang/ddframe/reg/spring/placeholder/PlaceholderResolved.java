@@ -79,6 +79,8 @@ public final class PlaceholderResolved {
     }
     
     private PropertySourcesPropertyResolver getPropertyResolverBeforeSpring4(final PropertySourcesPlaceholderConfigurer placeholderConfigurer) throws ReflectiveOperationException {
-        return new PropertySourcesPropertyResolver((PropertySources) PropertySourcesPlaceholderConfigurer.class.getField("propertySources").get(placeholderConfigurer));
+        java.lang.reflect.Field propertySources = PropertySourcesPlaceholderConfigurer.class.getDeclaredField("propertySources");
+        propertySources.setAccessible(true);
+        return new PropertySourcesPropertyResolver((PropertySources) propertySources.get(placeholderConfigurer));
     }
 }
